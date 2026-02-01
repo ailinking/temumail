@@ -76,7 +76,7 @@ export function useMailTm() {
       const domain = domains[0].domain;
       const username = mailtm.generateRandomString(10);
       const password = mailtm.generateRandomString(12);
-      const address = ${username}@;
+      const address = `${username}@${domain}`;
 
       const newAccount = await mailtm.createAccount(address, password);
       const token = await mailtm.getToken(address, password);
