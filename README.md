@@ -1,4 +1,4 @@
-﻿# TemuMail - Temporary Email Service
+# TemuMail - Temporary Email Service
 
 TemuMail is a secure, anonymous, and temporary email service built with Next.js and Tailwind CSS, powered by the Mail.tm API.
 

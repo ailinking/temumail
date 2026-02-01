@@ -1,4 +1,4 @@
-﻿export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.mail.tm';
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.mail.tm';
 
 export interface Domain {
   id: string;

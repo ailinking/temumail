@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { MessageSummary } from '../lib/mailtm';
 
 interface EmailListProps {
