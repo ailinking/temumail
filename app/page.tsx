@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState } from 'react';
 import { useMailTm } from '@/hooks/useMailTm';
@@ -95,7 +95,7 @@ export default function Home() {
             <button
               onClick={refresh}
               disabled={refreshing}
-              className={\p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors \\}
+              className={`p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors ${refreshing ? 'animate-spin' : ''}`}
               title="Refresh inbox"
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
