@@ -1,6 +1,7 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { useMailTm } from '@/hooks/useMailTm';
 import { EmailList } from '@/components/EmailList';
 import { EmailView } from '@/components/EmailView';
@@ -60,6 +61,12 @@ export default function Home() {
           >
             Create Temporary Email
           </button>
+
+          <div className="mt-8 pt-6 border-t dark:border-gray-700">
+            <Link href="/blog" className="text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors">
+              Read our Blog
+            </Link>
+          </div>
         </div>
       </div>
     );
@@ -70,8 +77,13 @@ export default function Home() {
       {/* Header */}
       <header className="bg-white dark:bg-gray-800 shadow-sm border-b dark:border-gray-700">
         <div className="container mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-4">
             <h1 className="text-2xl font-bold text-blue-600 dark:text-blue-400">TemuMail</h1>
+            <nav className="hidden md:block">
+              <Link href="/blog" className="text-sm text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors">
+                Blog
+              </Link>
+            </nav>
           </div>
           
           <div className="flex items-center gap-3 bg-gray-100 dark:bg-gray-700 px-4 py-2 rounded-lg">
