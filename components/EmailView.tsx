@@ -15,7 +15,7 @@ export function EmailView({ message, token, onClose, onDelete }: EmailViewProps)
 
   useEffect(() => {
     let mounted = true;
-    setLoading(true);
+    // Loading is handled by initial state + key prop in parent
     getMessage(token, message.id)
       .then(data => {
         if (mounted) {
@@ -99,9 +99,7 @@ export function EmailView({ message, token, onClose, onDelete }: EmailViewProps)
              dangerouslySetInnerHTML={{ __html: detail.html[0] }}
            />
         ) : (
-           <pre className="whitespace-pre-wrap font-sans">
-             {detail.text}
-           </pre>
+          <div className="whitespace-pre-wrap">{detail.text}</div>
         )}
       </div>
     </div>

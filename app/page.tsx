@@ -1,14 +1,15 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { useMailTm } from '@/hooks/useMailTm';
-import { EmailList } from '@/components/EmailList';
-import { EmailView } from '@/components/EmailView';
-import { MessageSummary } from '@/lib/mailtm';
+import React, { useState } from "react";
+import { useMailTm } from "@/hooks/useMailTm";
+import { EmailList } from "@/components/EmailList";
+import { EmailView } from "@/components/EmailView";
+import { MessageSummary } from "@/lib/mailtm";
+import { motion } from "framer-motion";
+import { Zap, Shield, Smartphone, Copy, Check, RefreshCw } from "lucide-react";
 
 export default function Home() {
-  const { account, messages, loading, refreshing, error, createRandomAccount, refresh, logout, deleteMsg } = useMailTm();
+  const { account, messages, loading, error, createRandomAccount, deleteMsg, refresh, refreshing } = useMailTm();
   const [selectedMsg, setSelectedMsg] = useState<MessageSummary | null>(null);
   const [copied, setCopied] = useState(false);
 
@@ -28,144 +29,156 @@ export default function Home() {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
-        <div className="text-center">
-          <p className="text-xl font-semibold">Creating temporary account...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!account) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900 p-4">
-        <div className="max-w-md w-full bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 text-center">
-          <h1 className="text-3xl font-bold mb-4 text-blue-600 dark:text-blue-400">TemuMail</h1>
-          <p className="mb-8 text-gray-600 dark:text-gray-300">
-            Secure, anonymous, temporary email addresses.
-            Protect your privacy and avoid spam.
-          </p>
-          
-          {error && (
-            <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md">
-              {error}
-            </div>
-          )}
-
-          <button
-            onClick={createRandomAccount}
-            disabled={loading}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
-          >
-            Create Temporary Email
-          </button>
-
-          <div className="mt-8 pt-6 border-t dark:border-gray-700">
-            <Link href="/blog" className="text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors">
-              Read our Blog
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
-      {/* Header */}
-      <header className="bg-white dark:bg-gray-800 shadow-sm border-b dark:border-gray-700">
-        <div className="container mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-4">
-            <h1 className="text-2xl font-bold text-blue-600 dark:text-blue-400">TemuMail</h1>
-            <nav className="hidden md:block">
-              <Link href="/blog" className="text-sm text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors">
-                Blog
-              </Link>
-            </nav>
-          </div>
-          
-          <div className="flex items-center gap-3 bg-gray-100 dark:bg-gray-700 px-4 py-2 rounded-lg">
-            <span className="font-mono text-lg">{account.address}</span>
-            <button 
-              onClick={handleCopy}
-              className="p-1 hover:text-blue-500 transition-colors"
-              title="Copy address"
-            >
-              {copied ? (
-                <span className="text-green-500"></span>
-              ) : (
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5" />
-                </svg>
-              )}
-            </button>
-          </div>
+    <div className="flex flex-col min-h-screen">
+      <section className="container pt-24 pb-20 md:pt-32 md:pb-32">
+        <div className="flex flex-col items-center text-center space-y-8 max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="w-full"
+          >
+            {!account && (
+              <>
+                <h1 className="text-5xl md:text-7xl font-black tracking-tight text-balance leading-[1.1] mb-6">
+                  The email platform <br />
+                  <span className="text-gradient-brand">built for privacy.</span>
+                </h1>
+                <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
+                  Stop spam. Protect your identity. Get a secure, anonymous temporary email address in seconds.
+                </p>
+              </>
+            )}
 
-          <div className="flex gap-2">
-            <button
-              onClick={refresh}
-              disabled={refreshing}
-              className={`p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors ${refreshing ? 'animate-spin' : ''}`}
-              title="Refresh inbox"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
-              </svg>
-            </button>
-            <button
-              onClick={logout}
-              className="px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
-            >
-              Destroy Account
-            </button>
-          </div>
-        </div>
-      </header>
+            {error && (
+               <div className="bg-destructive/10 text-destructive px-4 py-2 rounded-lg mb-6 inline-block">
+                 {error}
+               </div>
+            )}
 
-      {/* Main Content */}
-      <main className="container mx-auto p-4 flex-1">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-[calc(100vh-10rem)]">
-          {/* Email List */}
-          <div className="md:col-span-1 bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden flex flex-col">
-             <div className="p-3 border-b dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50 flex justify-between items-center">
-                <h2 className="font-semibold">Inbox ({messages.length})</h2>
-                {refreshing && <span className="text-xs text-gray-500">Updating...</span>}
-             </div>
-             <div className="flex-1 overflow-y-auto">
-                <EmailList 
-                  messages={messages} 
-                  selectedId={selectedMsg?.id}
-                  onSelect={setSelectedMsg}
-                  onDelete={handleDelete}
-                />
-             </div>
-          </div>
-
-          {/* Email View */}
-          <div className="md:col-span-2 bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden flex flex-col">
-            {selectedMsg ? (
-              <EmailView 
-                token={account.token} 
-                message={selectedMsg} 
-                onDelete={(id) => {
-                  deleteMsg(id);
-                  setSelectedMsg(null);
-                }}
-                onClose={() => setSelectedMsg(null)}
-              />
+            {loading ? (
+               <div className="flex items-center justify-center space-x-2 text-xl font-medium animate-pulse text-primary">
+                 <RefreshCw className="w-6 h-6 animate-spin" />
+                 <span>Creating your secure inbox...</span>
+               </div>
+            ) : !account ? (
+              <button
+                onClick={createRandomAccount}
+                className="inline-flex h-14 items-center justify-center rounded-xl bg-primary px-8 text-lg font-bold text-primary-foreground shadow-lg hover:bg-primary/90 transition-all hover:scale-105"
+              >
+                Create Temporary Email
+              </button>
             ) : (
-              <div className="flex-1 flex flex-col items-center justify-center text-gray-400 p-8">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" className="w-24 h-24 mb-4 opacity-50">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-                </svg>
-                <p>Select an email to read</p>
+              <div className="w-full max-w-5xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <div className="bento-card p-6 md:p-8 bg-card border-primary/20 shadow-xl">
+                  <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8 pb-8 border-b border-border">
+                     <div className="flex flex-col items-start gap-2">
+                        <span className="text-sm font-medium text-muted-foreground">Your Temporary Address</span>
+                        <div className="flex items-center gap-3 bg-muted/50 p-2 rounded-lg border border-border">
+                           <span className="font-mono text-xl md:text-3xl font-bold tracking-tight text-foreground px-2">{account.address}</span>
+                           <button 
+                             onClick={handleCopy}
+                             className="p-2 hover:bg-background rounded-md transition-colors border border-transparent hover:border-border shadow-sm"
+                             title="Copy address"
+                           >
+                             {copied ? <Check className="w-5 h-5 text-green-500" /> : <Copy className="w-5 h-5 text-muted-foreground" />}
+                           </button>
+                        </div>
+                     </div>
+                     <div className="flex items-center gap-2">
+                        <button 
+                           onClick={refresh}
+                           disabled={refreshing}
+                           className="flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors text-sm font-medium"
+                        >
+                           <RefreshCw className={`w-4 h-4 ${refreshing ? "animate-spin" : ""}`} />
+                           {refreshing ? "Refreshing..." : "Refresh Inbox"}
+                        </button>
+                     </div>
+                  </div>
+                  
+                  {/* Inbox Area */}
+                  <div className="text-left grid grid-cols-1 lg:grid-cols-3 gap-6 h-[600px]">
+                    {/* List */}
+                    <div className="lg:col-span-1 border border-border rounded-lg overflow-hidden bg-background flex flex-col">
+                       <div className="p-4 border-b border-border bg-muted/30 flex justify-between items-center">
+                          <h3 className="font-semibold">Inbox</h3>
+                          <span className="text-xs font-medium px-2 py-0.5 bg-primary/10 text-primary rounded-full">{messages.length}</span>
+                       </div>
+                       <div className="flex-1 overflow-y-auto">
+                         <EmailList 
+                           messages={messages} 
+                           onSelect={setSelectedMsg} 
+                           selectedId={selectedMsg?.id}
+                           onDelete={handleDelete}
+                         />
+                       </div>
+                    </div>
+                    
+                    {/* View */}
+                    <div className="lg:col-span-2 border border-border rounded-lg overflow-hidden bg-background relative flex flex-col">
+                      {selectedMsg ? (
+                        <EmailView 
+                            message={selectedMsg} 
+                            token={account.token}
+                            onClose={() => setSelectedMsg(null)}
+                            onDelete={(id) => {
+                                deleteMsg(id);
+                                setSelectedMsg(null);
+                            }} 
+                        />
+                      ) : (
+                        <div className="absolute inset-0 flex flex-col items-center justify-center text-muted-foreground p-8 text-center bg-muted/10">
+                          <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
+                            <Zap className="w-8 h-8 text-muted-foreground/50" />
+                          </div>
+                          <p className="font-medium">Select an email to read</p>
+                          <p className="text-sm mt-2 max-w-xs">Emails will appear here instantly. No need to refresh.</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
-          </div>
+          </motion.div>
         </div>
-      </main>
+      </section>
+
+      {!account && (
+        <section className="container py-20">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bento-card p-8">
+              <div className="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mb-6 text-blue-600 dark:text-blue-400">
+                <Zap className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Instant Delivery</h3>
+              <p className="text-muted-foreground">
+                Don"t wait for refresh. Emails are pushed to your screen the millisecond they arrive.
+              </p>
+            </div>
+            <div className="bento-card p-8">
+              <div className="w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center mb-6 text-purple-600 dark:text-purple-400">
+                <Shield className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Privacy First</h3>
+              <p className="text-muted-foreground">
+                No logs, no tracking. Your emails are automatically deleted after 1 hour.
+              </p>
+            </div>
+            <div className="bento-card p-8">
+              <div className="w-12 h-12 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center mb-6 text-green-600 dark:text-green-400">
+                <Smartphone className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Mobile Ready</h3>
+              <p className="text-muted-foreground">
+                Access your temporary inbox from any device. Fully responsive design.
+              </p>
+            </div>
+          </div>
+        </section>
+      )}
     </div>
   );
 }
