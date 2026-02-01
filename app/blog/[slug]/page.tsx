@@ -2,6 +2,7 @@
 import { getPostBySlug, blogPosts } from '@/lib/blog';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
+import { ArrowLeft, Calendar, User, Share2 } from 'lucide-react';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -45,48 +46,44 @@ export default async function BlogPost({ params }: Props) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <header className="bg-white dark:bg-gray-800 shadow-sm border-b dark:border-gray-700">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <Link href="/" className="text-2xl font-bold text-blue-600 dark:text-blue-400">
-            TemuMail
+    <div className="min-h-screen pb-20">
+      {/* Article Header */}
+      <div className="bg-secondary/30 border-b border-border/50 py-16">
+        <div className="container max-w-4xl">
+          <Link href="/blog" className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-8 transition-colors">
+            <ArrowLeft className="w-4 h-4 mr-2" /> Back to Blog
           </Link>
-          <nav className="space-x-4">
-            <Link href="/" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition-colors">
-              Home
-            </Link>
-            <Link href="/blog" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition-colors">
-              Blog
-            </Link>
-          </nav>
-        </div>
-      </header>
-
-      <main className="container mx-auto px-4 py-8">
-        <article className="max-w-3xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden p-8">
-          <header className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              {post.title}
-            </h1>
-            <div className="flex items-center text-gray-500 dark:text-gray-400 text-sm">
-              <span>{post.date}</span>
-              <span className="mx-2">&bull;</span>
-              <span>{post.author}</span>
+          
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6 leading-tight">
+            {post.title}
+          </h1>
+          
+          <div className="flex items-center justify-between flex-wrap gap-4">
+            <div className="flex items-center space-x-6 text-sm text-muted-foreground">
+              <span className="flex items-center"><Calendar className="w-4 h-4 mr-2" /> {post.date}</span>
+              <span className="flex items-center"><User className="w-4 h-4 mr-2" /> {post.author}</span>
             </div>
-          </header>
-
-          <div
-            className="prose prose-lg dark:prose-invert max-w-none"
-            dangerouslySetInnerHTML={{ __html: post.content }}
-          />
-        </article>
-      </main>
-
-      <footer className="bg-white dark:bg-gray-800 border-t dark:border-gray-700 mt-12 py-8">
-        <div className="container mx-auto px-4 text-center text-gray-500 dark:text-gray-400">
-          &copy; {new Date().getFullYear()} TemuMail. All rights reserved.     
+          </div>
         </div>
-      </footer>
+      </div>
+
+      <main className="container max-w-3xl py-12">
+        <article className="prose prose-lg dark:prose-invert max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-a:text-blue-600 dark:prose-a:text-blue-400 hover:prose-a:text-blue-500">
+          <div dangerouslySetInnerHTML={{ __html: post.content }} />
+        </article>
+
+        <div className="mt-16 pt-8 border-t border-border/50">
+          <div className="bg-secondary/20 rounded-2xl p-8 text-center">
+            <h3 className="text-2xl font-bold mb-4">Protect Your Inbox Today</h3>
+            <p className="text-muted-foreground mb-6">
+              Stop spam before it starts. Generate a free, secure disposable email address instantly.
+            </p>
+            <Link href="/" className="inline-flex items-center justify-center px-8 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity">
+              Get Started for Free
+            </Link>
+          </div>
+        </div>
+      </main>
     </div>
   );
 }

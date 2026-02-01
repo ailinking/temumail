@@ -1,6 +1,7 @@
 ﻿import Link from 'next/link';
 import { blogPosts } from '@/lib/blog';
 import { Metadata } from 'next';
+import { ArrowRight, Calendar, User } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Blog - TemuMail',
@@ -9,49 +10,48 @@ export const metadata: Metadata = {
 
 export default function BlogIndex() {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <header className="bg-white dark:bg-gray-800 shadow-sm border-b dark:border-gray-700">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <Link href="/" className="text-2xl font-bold text-blue-600 dark:text-blue-400">
-            TemuMail
-          </Link>
-          <nav>
-            <Link href="/" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition-colors">
-              Home
-            </Link>
-          </nav>
+    <div className="min-h-screen pb-20">
+      <div className="relative py-20 bg-secondary/30 border-b border-border/50">
+        <div className="container text-center space-y-4">
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
+            The <span className="text-gradient">Privacy Blog</span>
+          </h1>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Expert insights on digital hygiene, spam prevention, and anonymous communication.
+          </p>
         </div>
-      </header>
+      </div>
 
-      <main className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-8 text-center">TemuMail Blog</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"> 
+      <div className="container py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"> 
           {blogPosts.map((post) => (
-            <article key={post.slug} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-              <div className="p-6">
-                <div className="text-sm text-gray-500 dark:text-gray-400 mb-2">{post.date}</div>
-                <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-                  <Link href={`/blog/${post.slug}`} className="hover:text-blue-600 transition-colors">
+            <article key={post.slug} className="group flex flex-col h-full bg-card border border-border/50 rounded-2xl overflow-hidden hover:shadow-lg hover:border-primary/50 transition-all duration-300">
+              <div className="p-8 flex-1 flex flex-col">
+                <div className="flex items-center text-xs text-muted-foreground mb-4 space-x-4">
+                  <span className="flex items-center"><Calendar className="w-3 h-3 mr-1" /> {post.date}</span>
+                  <span className="flex items-center"><User className="w-3 h-3 mr-1" /> {post.author}</span>
+                </div>
+                
+                <h2 className="text-2xl font-bold mb-4 group-hover:text-primary transition-colors line-clamp-2">
+                  <Link href={`/blog/${post.slug}`}>
                     {post.title}
                   </Link>
                 </h2>
-                <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
+                
+                <p className="text-muted-foreground mb-6 line-clamp-3 flex-1">
                   {post.excerpt}
                 </p>
-                <Link href={`/blog/${post.slug}`} className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">
-                  Read more &rarr;
-                </Link>
+                
+                <div className="pt-4 mt-auto border-t border-border/30">
+                  <Link href={`/blog/${post.slug}`} className="inline-flex items-center text-sm font-semibold text-primary hover:text-primary/80 transition-colors">
+                    Read Article <ArrowRight className="ml-1 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
               </div>
             </article>
           ))}
         </div>
-      </main>
-
-      <footer className="bg-white dark:bg-gray-800 border-t dark:border-gray-700 mt-12 py-8">
-        <div className="container mx-auto px-4 text-center text-gray-500 dark:text-gray-400">
-          &copy; {new Date().getFullYear()} TemuMail. All rights reserved.     
-        </div>
-      </footer>
+      </div>
     </div>
   );
 }
