@@ -45,3 +45,30 @@ To become the most trusted and practical resource for online privacy, digital hy
 ## 5. Promotion Plan
 *   **Social**: Snippets for Twitter/X threads.
 *   **Communities**: Answering relevant questions on Quora/Reddit with helpful summaries (and links where allowed).
+
+## 6. Editorial Calendar (Month 2)
+
+### Week 5: Educational Deep Dive
+*   **Topic**: Temporary Email vs. Spam Filters: How They Work
+*   **Target Keyword**: how spam filters work, bypass spam filter, email deliverability
+*   **Intent**: Educational / Technical
+*   **Status**: *To be written*
+
+### Week 6: Competitor Comparison
+*   **Topic**: 10 Minute Mail Alternatives: Why TemuMail is Better
+*   **Target Keyword**: 10 minute mail alternative, better than temp mail, guerilla mail alternative
+*   **Intent**: Commercial Investigation
+*   **Status**: *To be written*
+
+### Week 7: Security & Anonymity
+*   **Topic**: Can Disposable Emails Be Traced? The Truth About Anonymity
+*   **Target Keyword**: are temp emails safe, track disposable email, anonymous email tracing
+*   **Intent**: Informational / Trust
+*   **Status**: *To be written*
+
+### Week 8: Lifestyle & Savings
+*   **Topic**: How to Get Student Discounts Without Spamming Your School Email
+*   **Target Keyword**: student discount hacks, unidays sign up, amazon prime student trial
+*   **Intent**: How-to / Transactional
+*   **Status**: *To be written*
+

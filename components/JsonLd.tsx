@@ -1,14 +1,16 @@
 ﻿import React from 'react';
 
 export default function JsonLd() {
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+  
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: 'TemuMail',
-    url: 'https://temumail.com',
+    url: baseUrl,
     potentialAction: {
       '@type': 'SearchAction',
-      target: 'https://temumail.com/?q={search_term_string}',
+      target: `${baseUrl}/?q={search_term_string}`,
       'query-input': 'required name=search_term_string',
     },
   };
@@ -35,7 +37,7 @@ export default function JsonLd() {
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApp) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApp) }}      
       />
     </>
   );
