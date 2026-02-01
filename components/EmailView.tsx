@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState, useRef } from 'react';
 import { MessageSummary, MessageDetail, getMessage } from '../lib/mailtm';
 
 interface EmailViewProps {
@@ -12,10 +12,10 @@ export function EmailView({ message, token, onClose, onDelete }: EmailViewProps)
   const [detail, setDetail] = useState<MessageDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
     let mounted = true;
-    // Loading is handled by initial state + key prop in parent
     getMessage(token, message.id)
       .then(data => {
         if (mounted) {
@@ -32,6 +32,36 @@ export function EmailView({ message, token, onClose, onDelete }: EmailViewProps)
 
     return () => { mounted = false; };
   }, [token, message.id]);
+
+  useEffect(() => {
+    if (detail?.html && detail.html.length > 0 && iframeRef.current) {
+      const doc = iframeRef.current.contentDocument;
+      if (doc) {
+        doc.open();
+        // Add basic styles to make it look decent and respect system theme preference if supported
+        // However, standard email clients usually render white background.
+        // To prevent "dark mode disable" (style leakage), iframe is key.
+        // We can force a white background inside the iframe to ensure readability for standard emails,
+        // or try to be smart. For now, let's just write the content.
+        // Adding <base target="_blank"> so links open in new tab
+        const content = `
+          <!DOCTYPE html>
+          <html>
+            <head>
+              <base target="_blank">
+              <style>
+                body { margin: 0; padding: 16px; font-family: system-ui, -apple-system, sans-serif; }
+                img { max-width: 100%; height: auto; }
+              </style>
+            </head>
+            <body>${detail.html[0]}</body>
+          </html>
+        `;
+        doc.write(content);
+        doc.close();
+      }
+    }
+  }, [detail]);
 
   if (loading) {
     return (
@@ -92,14 +122,16 @@ export function EmailView({ message, token, onClose, onDelete }: EmailViewProps)
         </div>
       </div>
 
-      <div className="flex-1 overflow-auto p-4 bg-white dark:bg-gray-800 dark:text-gray-100">
+      <div className="flex-1 overflow-hidden bg-white">
         {detail.html && detail.html.length > 0 ? (
-           <div
-             className="prose max-w-none dark:prose-invert"
-             dangerouslySetInnerHTML={{ __html: detail.html[0] }}
+           <iframe
+             ref={iframeRef}
+             className="w-full h-full border-0 block"
+             title="Email Content"
+             sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin"
            />
         ) : (
-          <div className="whitespace-pre-wrap">{detail.text}</div>
+          <div className="p-4 whitespace-pre-wrap">{detail.text}</div>
         )}
       </div>
     </div>
