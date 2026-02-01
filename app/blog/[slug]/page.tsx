@@ -13,10 +13,10 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> { 
   const { slug } = await params;
   const post = getPostBySlug(slug);
-  
+
   if (!post) {
     return {
       title: 'Post Not Found',
@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return {
-    title: \\ - TemuMail Blog\,
+    title: `${post.title} - TemuMail Blog`,
     description: post.excerpt,
     openGraph: {
       title: post.title,
@@ -74,8 +74,8 @@ export default async function BlogPost({ params }: Props) {
               <span>{post.author}</span>
             </div>
           </header>
-          
-          <div 
+
+          <div
             className="prose prose-lg dark:prose-invert max-w-none"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
@@ -84,7 +84,7 @@ export default async function BlogPost({ params }: Props) {
 
       <footer className="bg-white dark:bg-gray-800 border-t dark:border-gray-700 mt-12 py-8">
         <div className="container mx-auto px-4 text-center text-gray-500 dark:text-gray-400">
-          &copy; {new Date().getFullYear()} TemuMail. All rights reserved.
+          &copy; {new Date().getFullYear()} TemuMail. All rights reserved.     
         </div>
       </footer>
     </div>
