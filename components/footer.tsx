@@ -23,8 +23,8 @@ export function Footer() {
           <div>
             <h3 className="text-sm font-semibold mb-4">Legal</h3>
             <ul className="space-y-3 text-sm text-muted-foreground">
-              <li><Link href="#" className="hover:text-foreground">Privacy Policy</Link></li>
-              <li><Link href="#" className="hover:text-foreground">Terms of Service</Link></li>
+              <li><Link href="/privacy" className="hover:text-foreground">Privacy Policy</Link></li>
+              <li><Link href="/terms" className="hover:text-foreground">Terms of Service</Link></li>
             </ul>
           </div>
         </div>
