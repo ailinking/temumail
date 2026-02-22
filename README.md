@@ -13,17 +13,17 @@ TemuMail is a secure, anonymous, and temporary email service built with Next.js 
 ## Getting Started
 
 1. Clone the repository:
-   \\\ash
+   \\\bash
    git clone https://github.com/ailinking/temumail.git
    \\\
 
 2. Install dependencies:
-   \\\ash
+   \\\bash
    npm install
    \\\
 
 3. Run the development server:
-   \\\ash
+   \\\bash
    npm run dev
    \\\
 
